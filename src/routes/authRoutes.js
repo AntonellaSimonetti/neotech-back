@@ -1,8 +1,16 @@
-import express from "express";
-import { testUser } from "../controllers/userController.js";
+import { Router } from "express";
+import { register, login, getAllUsers } from "../controllers/auth.controller.js";
 
-const router = express.Router();
+const router = Router();
 
-router.get("/test", testUser);
+router.post("/register", register);
+router.post("/login", login);
+router.get("/users", getAllUsers); // para obtener todos los usuarios
+
+// 🔥 DEBUG
+router.post("/debug", (req, res) => {
+  console.log("POSTMAN BODY:", req.body);
+  return res.json({ body: req.body });
+});
 
 export default router;
