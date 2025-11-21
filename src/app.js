@@ -8,8 +8,6 @@ import adminRoutes from "./routes/adminRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
 
 
-
-
 const app = express();
 
 
@@ -23,7 +21,6 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/profile", profileRoutes);
-
 
 
 app.get("/", (req, res) => {

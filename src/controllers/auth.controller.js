@@ -18,7 +18,7 @@ export const register = async (req, res) => {
       return res.status(400).json({ message: "El email ya está registrado" });
     }
 
-    // Encriptar contraseña
+    
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await User.create({
@@ -46,12 +46,12 @@ export const login = async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
 
-    // Comparar contraseña
+    
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword)
       return res.status(400).json({ message: "Contraseña incorrecta" });
 
-    // Crear token
+  
     const token = jwt.sign(
       { id: user._id, rol: user.rol },
       process.env.JWT_SECRET,
@@ -73,7 +73,7 @@ export const login = async (req, res) => {
   }
 };
 
-// CREAR ADMIN AUTOMÁTICAMENTE
+// crear admin
 export const crearAdminSiNoExiste = async () => {
   try {
     const admin = await User.findOne({ rol: "admin" });
@@ -93,7 +93,7 @@ export const crearAdminSiNoExiste = async () => {
   }
 };
 
-// OBTENER TODOS LOS USUARIOS
+
 export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find().select("-password"); // ocultamos password

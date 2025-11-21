@@ -1,6 +1,6 @@
 import User from "../models/User.js";
 
-// Agregar a favoritos
+// productos preferidos
 export const addToWishlist = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -10,7 +10,7 @@ export const addToWishlist = async (req, res) => {
 
     if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
 
-    // si ya está, no agregar de nuevo
+    
     if (user.favoritos.includes(productId)) {
       return res.status(400).json({ message: "El producto ya está en favoritos" });
     }
@@ -24,7 +24,7 @@ export const addToWishlist = async (req, res) => {
   }
 };
 
-// Quitar de favoritos
+
 export const removeFromWishlist = async (req, res) => {
   try {
     const userId = req.user.id;

@@ -7,7 +7,7 @@ router.post("/register", register);
 router.post("/login", login);
 router.get("/users", getAllUsers); // para obtener todos los usuarios
 
-// 🔥 DEBUG
+
 router.post("/debug", (req, res) => {
   console.log("POSTMAN BODY:", req.body);
   return res.json({ body: req.body });
