@@ -17,6 +17,14 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "La contraseña es obligatoria"],
     },
+    direccion: {
+      type: String,
+      default: ""
+    },
+    telefono: {
+      type: String,
+      default: ""
+    },
 
     // Rol del usuario: admin o user
     rol: {
@@ -24,6 +32,13 @@ const userSchema = new mongoose.Schema(
       enum: ["admin", "user"],
       default: "user",
     },
+
+    favoritos: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product"
+      }
+    ],
 
     // Carrito del usuario
     carrito: [
