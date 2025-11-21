@@ -1,0 +1,80 @@
+import User from "../models/User.js";
+import Order from "../models/Order.js";
+import Product from "../models/Product.js";
+
+// 📌 Total de usuarios
+export const getUserCount = async (req, res) => {
+  try {
+    const count = await User.countDocuments();
+    res.json({ totalUsuarios: count });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// 📌 Total de ventas (órdenes pagadas)
+export const getSalesCount = async (req, res) => {
+  try {
+    const count = await Order.countDocuments({ status: "pagado" });
+    res.json({ totalVentas: count });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// 📌 Total facturado
+export const getTotalRevenue = async (req, res) => {
+  try {
+    const result = await Order.aggregate([
+      { $match: { status: "pagado" } },
+      { $group: { _id: null, total: { $sum: "$total" } } }
+    ]);
+
+    res.json({ totalFacturado: result[0]?.total || 0 });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// 📌 Productos más vendidos
+export const getBestSellers = async (req, res) => {
+  try {
+    const result = await Order.aggregate([
+      { $unwind: "$items" },
+      { $group: {
+          _id: "$items.productId",
+          cantidadVendida: { $sum: "$items.quantity" }
+      }},
+      { $sort: { cantidadVendida: -1 } },
+      { $limit: 5 },
+      { $lookup: {
+          from: "products",
+          localField: "_id",
+          foreignField: "_id",
+          as: "producto"
+      }},
+      { $unwind: "$producto" }
+    ]);
+
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// 📌 Órdenes por estado (pendiente, pagado, enviado, etc.)
+export const getOrdersByStatus = async (req, res) => {
+  try {
+    const result = await Order.aggregate([
+      { $group: {
+          _id: "$status",
+          cantidad: { $sum: 1 }
+      }},
+      { $sort: { cantidad: -1 } }
+    ]);
+
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
