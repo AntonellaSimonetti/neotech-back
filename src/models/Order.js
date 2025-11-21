@@ -2,52 +2,33 @@ import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema(
   {
-    usuario: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      required: true
     },
-
-    productos: [
+    items: [
       {
         productId: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Product",
-          required: true,
+          required: true
         },
-        quantity: {
-          type: Number,
-          required: true,
-          min: [1, "La cantidad mínima es 1"],
-        },
-      },
+        quantity: { type: Number, required: true },
+        price: { type: Number, required: true }
+      }
     ],
-
     total: {
       type: Number,
-      required: true,
-      min: [0, "El total no puede ser negativo"],
+      required: true
     },
-
-    direccion: {
+    status: {
       type: String,
-      required: [true, "La dirección de envío es obligatoria"],
-    },
-
-    estado: {
-      type: String,
-      enum: ["pendiente", "pagado", "enviado", "entregado", "cancelado"],
-      default: "pendiente",
-    },
-
-    fecha: {
-      type: Date,
-      default: Date.now,
-    },
+      enum: ["pendiente", "pagado", "cancelado"],
+      default: "pendiente"
+    }
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
 export default mongoose.model("Order", orderSchema);
