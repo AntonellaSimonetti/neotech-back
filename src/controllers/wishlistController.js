@@ -3,14 +3,13 @@ import User from "../models/User.js";
 // productos preferidos
 export const addToWishlist = async (req, res) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user.userId; // 🔥 ESTA LÍNEA ES LA CORREGIDA
     const { productId } = req.body;
 
     const user = await User.findById(userId);
 
     if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
 
-    
     if (user.favoritos.includes(productId)) {
       return res.status(400).json({ message: "El producto ya está en favoritos" });
     }
@@ -24,10 +23,9 @@ export const addToWishlist = async (req, res) => {
   }
 };
 
-
 export const removeFromWishlist = async (req, res) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user.userId; // 🔥 CORREGIDA
     const { productId } = req.body;
 
     const user = await User.findById(userId);
@@ -45,7 +43,7 @@ export const removeFromWishlist = async (req, res) => {
 // Listar favoritos
 export const getWishlist = async (req, res) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user.userId; // 🔥 CORREGIDA
 
     const user = await User.findById(userId).populate("favoritos");
 
