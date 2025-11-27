@@ -1,6 +1,6 @@
 import Product from "../models/Product.js";
-//esto pertenece solo al admin
-// Crear producto (admin)
+//esto pertenece solo al admin sobre la gestion de productos
+
 export const createProduct = async (req, res) => {
   try {
     const newProduct = await Product.create(req.body);

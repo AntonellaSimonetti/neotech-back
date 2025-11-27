@@ -2,7 +2,7 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import Order from "../models/Order.js";
 
-// Obtener perfil
+// perfil del usuario
 export const getProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
@@ -12,7 +12,7 @@ export const getProfile = async (req, res) => {
   }
 };
 
-// Actualizar perfil (nombre, email, dirección, teléfono)
+
 export const updateProfile = async (req, res) => {
   try {
     const fields = (({ nombre, email, direccion, telefono }) => ({
@@ -42,13 +42,13 @@ export const changePassword = async (req, res) => {
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
 
-    // Comparar contraseña actual
+    
     const match = await bcrypt.compare(currentPassword, user.password);
     if (!match) {
       return res.status(400).json({ message: "Contraseña actual incorrecta" });
     }
 
-    // Reemplazar contraseña
+
     user.password = await bcrypt.hash(newPassword, 10);
     await user.save();
 
@@ -58,7 +58,7 @@ export const changePassword = async (req, res) => {
   }
 };
 
-// Historial de órdenes
+// Historial de ordenes
 export const getOrderHistory = async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user.id })

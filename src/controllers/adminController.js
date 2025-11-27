@@ -2,7 +2,7 @@ import User from "../models/User.js";
 import Order from "../models/Order.js";
 import Product from "../models/Product.js";
 
-// 📌 Total de usuarios
+
 export const getUserCount = async (req, res) => {
   try {
     const count = await User.countDocuments();
@@ -12,7 +12,7 @@ export const getUserCount = async (req, res) => {
   }
 };
 
-// 📌 Total de ventas (órdenes pagadas)
+
 export const getSalesCount = async (req, res) => {
   try {
     const count = await Order.countDocuments({ status: "pagado" });
@@ -22,7 +22,7 @@ export const getSalesCount = async (req, res) => {
   }
 };
 
-// 📌 Total facturado
+
 export const getTotalRevenue = async (req, res) => {
   try {
     const result = await Order.aggregate([
@@ -36,7 +36,7 @@ export const getTotalRevenue = async (req, res) => {
   }
 };
 
-// 📌 Productos más vendidos
+// producto mas vendido
 export const getBestSellers = async (req, res) => {
   try {
     const result = await Order.aggregate([
@@ -62,7 +62,7 @@ export const getBestSellers = async (req, res) => {
   }
 };
 
-// 📌 Órdenes por estado (pendiente, pagado, enviado, etc.)
+//  estado de las ordenes
 export const getOrdersByStatus = async (req, res) => {
   try {
     const result = await Order.aggregate([

@@ -11,7 +11,7 @@ import {
 
 const router = Router();
 
-// Todas estas rutas requieren ADMIN
+
 router.use(verifyToken, isAdmin);
 
 router.get("/users/count", getUserCount);

@@ -13,27 +13,27 @@ export const createOrder = async (req, res) => {
       return res.status(400).json({ message: "El carrito está vacío" });
     }
 
-    // Generar lista de items
+
     const items = user.carrito.map((item) => ({
       productId: item.productId._id,
       quantity: item.quantity,
       price: item.productId.precio
     }));
 
-    // Calcular total
+    // Calcular el total
     const total = items.reduce(
       (acc, item) => acc + item.price * item.quantity,
       0
     );
 
-    // Crear orden
+    
     const newOrder = await Order.create({
       user: userId,
       items,
       total
     });
 
-    // Vaciar carrito
+    
     user.carrito = [];
     await user.save();
 
@@ -46,7 +46,7 @@ export const createOrder = async (req, res) => {
   }
 };
 
-// Obtener órdenes del usuario
+
 export const getUserOrders = async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user.id }).populate("items.productId");
@@ -56,7 +56,7 @@ export const getUserOrders = async (req, res) => {
   }
 };
 
-// Obtener todas las órdenes (admin)
+// Obtener todas las ordenes (admin)
 export const getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find().populate("user").populate("items.productId");
