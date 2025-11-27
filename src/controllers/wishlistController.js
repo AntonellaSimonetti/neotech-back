@@ -3,7 +3,7 @@ import User from "../models/User.js";
 // productos preferidos
 export const addToWishlist = async (req, res) => {
   try {
-    const userId = req.user.userId; // 🔥 ESTA LÍNEA ES LA CORREGIDA
+    const userId = req.user.userId || req.user.id || req.user._id;
     const { productId } = req.body;
 
     const user = await User.findById(userId);
@@ -25,10 +25,12 @@ export const addToWishlist = async (req, res) => {
 
 export const removeFromWishlist = async (req, res) => {
   try {
-    const userId = req.user.userId; // 🔥 CORREGIDA
+    const userId = req.user.userId || req.user.id || req.user._id;
     const { productId } = req.body;
 
     const user = await User.findById(userId);
+
+    if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
 
     user.favoritos = user.favoritos.filter(id => id.toString() !== productId);
 
@@ -43,9 +45,11 @@ export const removeFromWishlist = async (req, res) => {
 // Listar favoritos
 export const getWishlist = async (req, res) => {
   try {
-    const userId = req.user.userId; // 🔥 CORREGIDA
+    const userId = req.user.userId || req.user.id || req.user._id;
 
     const user = await User.findById(userId).populate("favoritos");
+
+    if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
 
     res.json(user.favoritos);
   } catch (error) {

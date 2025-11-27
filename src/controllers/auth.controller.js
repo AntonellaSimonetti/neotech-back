@@ -86,10 +86,10 @@ export const crearAdminSiNoExiste = async () => {
         rol: "admin",
       });
 
-      console.log("🟢 Admin creado automáticamente");
+      console.log(" Admin creado automáticamente");
     }
   } catch (error) {
-    console.error("❌ Error creando admin:", error);
+    console.error(" Error creando admin:", error);
   }
 };
 
