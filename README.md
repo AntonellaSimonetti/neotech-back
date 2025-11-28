@@ -131,6 +131,6 @@ npm start
 
 ---
 
-## Contribuidores
+## Contribuidoras
 - Antonella Simonetti  
 - Clara Farias
