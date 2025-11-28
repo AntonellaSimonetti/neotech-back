@@ -14,6 +14,15 @@ export const createOrder = async (req, res) => {
     }
 
 
+    for (let item of user.carrito) {
+      if (item.quantity > item.productId.stock) {
+        return res.status(400).json({
+          message: `Stock insuficiente para ${item.productId.nombre}`,
+          disponible: item.productId.stock
+        });
+      }
+    }
+
     const items = user.carrito.map((item) => ({
       productId: item.productId._id,
       quantity: item.quantity,
@@ -25,6 +34,16 @@ export const createOrder = async (req, res) => {
       (acc, item) => acc + item.price * item.quantity,
       0
     );
+
+    // Actualiza stock de productos
+
+    for (let item of user.carrito) {
+      await Product.findByIdAndUpdate(
+        item.productId._id,
+        { $inc: { stock: -item.quantity } } // resta stock
+      );
+    }
+
 
     
     const newOrder = await Order.create({

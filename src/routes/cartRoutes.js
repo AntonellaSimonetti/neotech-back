@@ -5,19 +5,25 @@ import {
   updateQuantity,
   removeFromCart,
   clearCart,
-  getCart
+  getCart,
 } from "../controllers/cartController.js";
+
+import {
+  validateAddToCart,
+  validateUpdateQuantity,
+  validateRemoveFromCart
+} from "../middlewares/validateCart.js";
 
 const router = Router();
 
 // Agregar producto al carrito
-router.post("/add", verifyToken, addToCart);
+router.post("/add", verifyToken, validateAddToCart, addToCart);
 
 // Editar cantidad
-router.put("/update", verifyToken, updateQuantity);
+router.put("/update", verifyToken, validateUpdateQuantity, updateQuantity);
 
 // Eliminar un producto
-router.delete("/remove", verifyToken, removeFromCart);
+router.delete("/remove", verifyToken, validateRemoveFromCart, removeFromCart);
 
 // Vaciar carrito
 router.delete("/clear", verifyToken, clearCart);

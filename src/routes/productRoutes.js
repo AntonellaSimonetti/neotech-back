@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { verifyToken, isAdmin } from "../middlewares/auth.js";
+
 import {
   createProduct,
   getProducts,
@@ -22,7 +23,7 @@ router.get("/", getProducts);
 router.get("/:id", getProductById);
 
 
-router.put("/:id", verifyToken, isAdmin, updateProduct);
+router.put("/:id", verifyToken, isAdmin,updateProduct);
 
 
 router.delete("/:id", verifyToken, isAdmin, deleteProduct);

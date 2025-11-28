@@ -25,7 +25,7 @@ const productSchema = new mongoose.Schema(
       default: 0
     },
     imagen: {
-      type: String, // URL
+      type: String, 
       required: false
     },
     marca: {
