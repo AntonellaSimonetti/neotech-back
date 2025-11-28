@@ -36,15 +36,12 @@ export const createOrder = async (req, res) => {
     );
 
     // Actualiza stock de productos
-
     for (let item of user.carrito) {
       await Product.findByIdAndUpdate(
         item.productId._id,
         { $inc: { stock: -item.quantity } } // resta stock
       );
     }
-
-
     
     const newOrder = await Order.create({
       user: userId,
