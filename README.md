@@ -10,7 +10,7 @@ Incluye autenticación JWT, manejo de roles, módulos ABM y funcionalidades de c
 ## Funcionalidades Principales
 1. Autenticación de usuarios (registro, login, JWT).  
 2. Rol administrador preconfigurado.  
-3. Gestión de productos (Alta, Baja, Modificación y Consulta).  
+3. Gestión de productos (Alta, Baja, Modificación).  
 4. Gestión de usuarios (perfil, edición, favoritos).  
 5. Carrito de compras (agregar, eliminar y actualizar productos).  
 6. Generación de órdenes.  
@@ -79,10 +79,6 @@ ADMIN_PASSWORD=123456
 ## Instrucciones de Uso
 
 ### 1. Clonar el repositorio
-```
-git clone https://github.com/AntonellaSimonetti/neotech-back.git
-cd neotech-back
-```
 
 ### 2. Instalar dependencias
 ```
@@ -96,38 +92,6 @@ Crear el archivo `.env` con los valores indicados.
 ```
 npm run dev
 ```
-
-### 5. Iniciar en producción
-```
-npm start
-```
-
----
-
-## Endpoints Principales
-
-### Auth
-- POST /api/auth/register  
-- POST /api/auth/login  
-
-### Usuarios
-- GET /api/users/profile  
-- PUT /api/users/update  
-
-### Favoritos
-- POST /api/users/favorites/:productId  
-- GET /api/users/favorites  
-
-### Carrito
-- POST /api/cart/add  
-- GET /api/cart  
-- DELETE /api/cart/remove/:id  
-
-### Productos
-- GET /api/products  
-- POST /api/products  
-- PUT /api/products/:id  
-- DELETE /api/products/:id  
 
 ---
 
